@@ -14,13 +14,13 @@ function inputDiv(text, type, parent) {
 }
 
 //input property assembles both subDiv and inputDiv to create the sub container for storing a certain value in the log
-function inputProperty(text, type, parentContainer, required = true) {
+function inputProperty(text, type, parentContainer, required = "true") {
     const container = document.createElement('div')
     container.className = "input-row"
     container.dataset.required = required
     inputDiv(text, type, container)
     parentContainer.appendChild(container)
-    if (required) {
+    if (required === "true") {
         const star = document.createElement('h3')
         star.textContent = "*"
         star.className = "required"
@@ -32,6 +32,7 @@ function inputProperty(text, type, parentContainer, required = true) {
 //initLog creates the log
 function initLog() {
     makingLog = true //so you can't log more than one at a time
+    invalid = false
 
     const container = document.createElement('div')
 
@@ -42,8 +43,8 @@ function initLog() {
     const costContainer = inputProperty("Cost", 'text', container)
     const personContainer = inputProperty("Who repaired it", 'text', container)
     const dateContainer = inputProperty("Date of log", 'date', container)
-    const procedureContainer = inputProperty("Procedure", 'text', container, required = false)
-    const extraContainer = inputProperty("Extra Notes", 'text', container, required = false)
+    const procedureContainer = inputProperty("Procedure", 'text', container, required = "false")
+    const extraContainer = inputProperty("Extra Notes", 'text', container, required = "false")
     
     const containers = [titleContainer, partContainer, costContainer, personContainer, dateContainer, procedureContainer, extraContainer]
 
@@ -52,19 +53,25 @@ function initLog() {
     container.appendChild(finishButton)
     document.body.appendChild(container)
 
-    finishButton.addEventListener("click", () => { //apologies for awful nesting
-        for (i = 0; i < containers.length;) {
-            const input = containers[i].querySelector("input")
-            const required = containers[i].dataset.required
-            if (required) {
-                if (input.type == 'text') {
-                    if (!(input.textContent == "")) {
+    finishButton.addEventListener("click", () => {
+        let hasInvalid = false;
 
-                    }
-                }
+        for (let i = 0; i < containers.length; i++) {
+            const input = containers[i].querySelector("input");
+            const required = containers[i].dataset.required === "true";
+
+            input.classList.remove("invalid");
+
+            if (required && input.value.trim() === "") {
+                hasInvalid = true;
+                input.classList.add("invalid");
             }
         }
-    })
+
+        if (hasInvalid) {
+            alert("invalid");
+        }
+    });
 }
 
 createButton.addEventListener("click", () => {
