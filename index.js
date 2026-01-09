@@ -1,5 +1,17 @@
 // const fs = require('fs'); you apparently need node.js for this
 
+class LogEntry {
+    constructor(model, part, cost, person, date, procedure, extra) {
+        this.model = model
+        this.part = part
+        this.cost = cost
+        this.person = person
+        this.date = date
+        this.procedure = procedure
+        this.extra = extra
+    }
+}
+
 const createButton = document.getElementById("createNew")
 let makingLog = false
 
@@ -74,7 +86,9 @@ function initLog() {
         if (hasInvalid) {
             alert("invalid entry, please enter information in required boxes");
         } else {
-            
+            newLog = new LogEntry(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6])
+            document.body.removeChild(container)
+            makingLog = false
         }
     });
 }
