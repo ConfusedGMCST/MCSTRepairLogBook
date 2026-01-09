@@ -1,0 +1,14 @@
+{
+    "logs": [
+        {
+            "id": 0,
+            "model": "test1",
+            "part": "test2",
+            "cost": "test3",
+            "person": "test4",
+            "date": "ts/is/atest",
+            "procedure": "test5",
+            "extra": "test6"
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+const idText = document.getElementById("id")
+const model = document.getElementById("model")
+const part = document.getElementById("part")
+const cost = document.getElementById("cost")
+const date = document.getElementById("date")
+const procedure = document.getElementById("procedure")
+const extra = document.getElementById("extra-notes")

@@ -1,4 +1,6 @@
 // const fs = require('fs'); you apparently need node.js for this
+const contentHolder = document.getElementById("contentHolder")
+currentLog = 0
 
 class LogEntry {
     constructor(model, part, cost, person, date, procedure, extra) {
@@ -12,12 +14,44 @@ class LogEntry {
     }
 }
 
-class miniLog {
-    constructor(model, part, cost, date) {
-        this.model = model
-        this.part = part
-        this.cost = cost
-        this.date = date
+class miniLog { //creates a visible mini display of a log, which when expanded goes to a separate webpage
+    constructor(data) {
+        this.id = data.id
+        this.model = data.model
+        this.part = data.part
+        this.cost = data.cost
+        this.date = data.date
+    }
+    showLog() {
+        const logContainer = document.createElement('div')
+        
+        logContainer.setAttribute('align', 'right')
+
+        const idText = this.quickH3(this.id, logContainer)
+        const modelText = this.quickH3(this.model, logContainer)
+        const partText = this.quickH3(this.part, logContainer)
+        const costText = this.quickH3(this.cost, logContainer)
+        const dateText = this.quickH3(this.date, logContainer)
+
+        const expandButton = document.createElement('button')
+
+        expandButton.textContent = "expand"
+
+        expandButton.addEventListener("click", () => {
+            currentLog = this.id
+            window.location.assign("logview.html")
+        })
+
+        logContainer.appendChild(expandButton)
+        contentHolder.appendChild(logContainer)
+    }
+    quickH3(text, parent) {
+        const propertyText = document.createElement('h3')
+
+        propertyText.textContent = text
+
+        parent.appendChild(propertyText)
+        return propertyText
     }
 }
 
@@ -75,26 +109,26 @@ function initLog() {
     const finishButton = document.createElement('button')
     finishButton.textContent = "Finish"
     container.appendChild(finishButton)
-    document.body.appendChild(container)
+    contentHolder.prepend(container)
 
     finishButton.addEventListener("click", () => { //checks if all boxes that require input are filled and adds the values into the logs.json files
         let hasInvalid = false;
         inputs = []
 
         for (let i = 0; i < inputAmount; i++) {
-            const input = containers[i].querySelector("input");
-            const required = containers[i].dataset.required === "true";
+            const input = containers[i].querySelector("input")
+            const required = containers[i].dataset.required === "true"
             inputs[i] = input.value //has ALL the values for each of the properties of the log
             input.classList.remove("invalid");
 
             if (required && input.value.trim() === "") {
-                hasInvalid = true;
-                input.classList.add("invalid");
+                hasInvalid = true
+                input.classList.add("invalid")
             }
         }
 
         if (hasInvalid) {
-            alert("invalid entry, please enter information in required boxes");
+            alert("invalid entry, please enter information in required boxes")
         } else {
             newLog = new LogEntry(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6])
             document.body.removeChild(container)
@@ -108,3 +142,13 @@ createButton.addEventListener("click", () => {
         initLog()
     }
 })
+
+fetch('logs.json') //creates a test log
+    .then(response => response.json())
+    .then(jsonData => {
+        const logs = jsonData.logs.map(data => new miniLog(data))   
+
+        const testLog = logs.find(p => p.id == 0)
+        testLog.showLog()
+    })
+    .catch(err => console.error('Error loading file:', err))
