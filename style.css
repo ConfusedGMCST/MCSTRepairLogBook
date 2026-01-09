@@ -1,0 +1,21 @@
+.input-row input {
+    flex: 1;
+    max-width: 40%;
+}
+
+.required {
+    color: red;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 1%;
+}
+
+.log-input-container {
+    padding: 0.5%;
+    border: 3px solid black;
+    margin-top: 2%;
+    margin-right: 40%;
+}

@@ -1,43 +1,45 @@
 const createButton = document.getElementById("createNew")
 let makingLog = false
 
-function subDiv(div) {
-    div.style.display = 'flex'
-    div.style.alignItems = 'center'
-    div.style.gap = '8px'
-}
-
-function inputDiv(text, parent) {
+//inputDiv creates the elements in the sub container
+function inputDiv(text, type, parent) {
     const textElement = document.createElement('h3')
     const input = document.createElement('input')
 
     textElement.textContent = text
-    input.type = 'text'
+    input.type = type
 
     parent.appendChild(textElement)
     parent.appendChild(input)
 }
 
+//input property assembles both subDiv and inputDiv to create the sub container for storing a certain value in the log
+function inputProperty(text, type, parentContainer, required = false) {
+    const container = document.createElement('div')
+    container.className = "input-row"
+    inputDiv(text, type, container)
+    parentContainer.appendChild(container)
+    if (required) {
+        //finish this later
+    }
+    return container //returns the container to a variable
+}
+
+//initLog creates the log
 function initLog() {
-    makingLog = true
+    makingLog = true //so you can't log more than one at a time
 
     const container = document.createElement('div')
-    const titleContainer = document.createElement('div')
-    const partContainer = document.createElement('div')
 
-    container.style.padding = '0.5%'
-    container.style.border = '3px solid black'
-    container.style.marginTop = '2%'
-    container.style.marginRight = '40%'
+    container.className = "log-input-container"
 
-    subDiv(titleContainer)
-    subDiv(partContainer)
+    const titleContainer = inputProperty("Model ", 'text', container)
+    const partContainer = inputProperty("Part repaired", 'text', container)
+    const costContainer = inputProperty("Cost", 'text', container)
+    const personContainer = inputProperty("Who repaired it", 'text', container)
+    const dateContainer = inputProperty("Date of log", 'date', container)
+    const procedureContainer = inputProperty("Procedure", 'text', container, required = true)
 
-    inputDiv("Model", titleContainer)
-    inputDiv("Part repaired", partContainer) //This shouldn't be input, it should be a list of checkboxes and you can add a new one
-
-    container.appendChild(titleContainer)
-    container.appendChild(partContainer)
     document.body.appendChild(container)
 }
 
