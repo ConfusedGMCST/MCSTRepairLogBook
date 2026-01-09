@@ -12,8 +12,18 @@ class LogEntry {
     }
 }
 
+class miniLog {
+    constructor(model, part, cost, date) {
+        this.model = model
+        this.part = part
+        this.cost = cost
+        this.date = date
+    }
+}
+
 const createButton = document.getElementById("createNew")
-let makingLog = false
+makingLog = false
+inputAmount = 7
 
 //inputDiv creates the elements in the sub container
 function inputDiv(text, type, parent) {
@@ -71,7 +81,7 @@ function initLog() {
         let hasInvalid = false;
         inputs = []
 
-        for (let i = 0; i < containers.length; i++) {
+        for (let i = 0; i < inputAmount; i++) {
             const input = containers[i].querySelector("input");
             const required = containers[i].dataset.required === "true";
             inputs[i] = input.value //has ALL the values for each of the properties of the log
