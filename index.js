@@ -69,20 +69,20 @@ function inputDiv(text, type, parent) {
 
     parent.appendChild(textElement)
     parent.appendChild(input)
+
+    return textElement
 }
 
 //input property assembles both subDiv and inputDiv to create the sub container for storing a certain value in the log
 function inputProperty(text, type, parentContainer, required = "true") {
     const container = document.createElement('div')
-    container.className = "input-row"
+    // container.className = "input-row"
     container.dataset.required = required
-    inputDiv(text, type, container)
+    const inputElement = inputDiv(text, type, container)
     parentContainer.appendChild(container)
     if (required === "true") {
-        const star = document.createElement('h3')
-        star.textContent = "*"
-        star.className = "required"
-        container.appendChild(star)
+        inputElement.textContent = inputElement.textContent + "*" 
+        // star.className = "required"
     }
     return container //returns the container to a variable
 }
@@ -94,7 +94,7 @@ function initLog() {
 
     const container = document.createElement('div')
 
-    container.className = "log-input-container"
+    // container.className = "log-input-container"
 
     const titleContainer = inputProperty("Model ", 'text', container)
     const partContainer = inputProperty("Part repaired", 'text', container)
@@ -119,11 +119,11 @@ function initLog() {
             const input = containers[i].querySelector("input")
             const required = containers[i].dataset.required === "true"
             inputs[i] = input.value //has ALL the values for each of the properties of the log
-            input.classList.remove("invalid");
+            // input.classList.remove("invalid");
 
             if (required && input.value.trim() === "") {
                 hasInvalid = true
-                input.classList.add("invalid")
+                // input.classList.add("invalid")
             }
         }
 
@@ -131,7 +131,7 @@ function initLog() {
             alert("invalid entry, please enter information in required boxes")
         } else {
             newLog = new LogEntry(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6])
-            document.body.removeChild(container)
+            contentHolder.removeChild(container)
             makingLog = false
         }
     });
