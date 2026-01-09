@@ -19,8 +19,8 @@ function inputProperty(text, type, parentContainer, required = false) {
     container.className = "input-row"
     inputDiv(text, type, container)
     parentContainer.appendChild(container)
-    if (required) {
-        //finish this later
+    if (!required) {
+        
     }
     return container //returns the container to a variable
 }
@@ -38,8 +38,13 @@ function initLog() {
     const costContainer = inputProperty("Cost", 'text', container)
     const personContainer = inputProperty("Who repaired it", 'text', container)
     const dateContainer = inputProperty("Date of log", 'date', container)
-    const procedureContainer = inputProperty("Procedure", 'text', container, required = true)
+    const procedureContainer = inputProperty("Procedure", 'text', container, required = false)
+    const extraContainer = inputProperty("Extra Notes", 'text', container, required = false)
+    
+    const finishButton = document.createElement('button')
+    finishButton.textContent = "Finish" //add functionality later
 
+    container.appendChild(finishButton)
     document.body.appendChild(container)
 }
 
