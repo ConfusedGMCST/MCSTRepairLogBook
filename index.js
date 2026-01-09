@@ -1,3 +1,5 @@
+// const fs = require('fs'); you apparently need node.js for this
+
 const createButton = document.getElementById("createNew")
 let makingLog = false
 
@@ -53,13 +55,14 @@ function initLog() {
     container.appendChild(finishButton)
     document.body.appendChild(container)
 
-    finishButton.addEventListener("click", () => {
+    finishButton.addEventListener("click", () => { //checks if all boxes that require input are filled and adds the values into the logs.json files
         let hasInvalid = false;
+        inputs = []
 
         for (let i = 0; i < containers.length; i++) {
             const input = containers[i].querySelector("input");
             const required = containers[i].dataset.required === "true";
-
+            inputs[i] = input.value //has ALL the values for each of the properties of the log
             input.classList.remove("invalid");
 
             if (required && input.value.trim() === "") {
@@ -69,7 +72,9 @@ function initLog() {
         }
 
         if (hasInvalid) {
-            alert("invalid");
+            alert("invalid entry, please enter information in required boxes");
+        } else {
+            
         }
     });
 }
