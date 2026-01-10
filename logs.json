@@ -9,6 +9,16 @@
             "date": "ts/is/atest",
             "procedure": "test5",
             "extra": "test6"
+        },
+        {
+            "id": 1,
+            "model": "jabroni",
+            "part": "pepperoni",
+            "cost": "skabloni",
+            "person": "theroni",
+            "date": "ts/is/atest",
+            "procedure": "guatemala",
+            "extra": "mhm"
         }
     ]
 }

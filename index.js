@@ -153,16 +153,21 @@ function initLog() {
 
 createButton.addEventListener("click", () => {
     if (!makingLog) {
-        initLog()
+        newLog = initLog()
     }
 })
 
-fetch('logs.json') //creates a test log
+function loadLogs() {
+    fetch('logs.json') //creates a test log
     .then(response => response.json())
     .then(jsonData => {
         const logs = jsonData.logs.map(data => new miniLog(data))   
-
-        const testLog = logs.find(p => p.id == 0)
-        testLog.showLog()
+        for (i = 0; i < jsonData.logs.length; i++) {
+            const log = logs.find(p => p.id == i) 
+            log.showLog()
+        }
     })
     .catch(err => console.error('Error loading file:', err))
+}
+
+loadLogs()
