@@ -2,7 +2,7 @@
 const contentHolder = document.getElementById("contentHolder")
 currentLog = 0
 
-class LogEntry {
+class LogEntry { //for making new logs
     constructor(model, part, cost, person, date, procedure, extra) {
         this.model = model
         this.part = part
@@ -11,6 +11,19 @@ class LogEntry {
         this.date = date
         this.procedure = procedure
         this.extra = extra
+    }
+}
+
+class Log { // for pre-existing logs
+    constructor(data) {
+        this.id = data.id
+        this.model = data.model
+        this.part = data.part
+        this.cost = data.cost
+        this.person = data.person
+        this.date = data.date
+        this.procedure = data.procedure
+        this.extra = data.extra
     }
 }
 
@@ -39,6 +52,7 @@ class miniLog { //creates a visible mini display of a log, which when expanded g
 
         expandButton.addEventListener("click", () => {
             currentLog = this.id
+            sessionStorage.setItem('currentID', currentLog)
             window.location.assign("logview.html")
         })
 
